@@ -1,0 +1,45 @@
+1. 
+A closure is a feature where an inner function has access to variables from its outer function, 
+even after the outer function has returned. 
+Closures allow a function to "remember" its surrounding scope, 
+which is particularly useful for creating functions that can maintain state over time.
+
+In my project, while closures are not explicitly required, 
+they could be used for example when handling the rating functionality. 
+If I wanted to create a function that generates a specific rating handler for each joke, 
+I could use a closure. Here’s an example of what that might look like:
+
+/////////////
+function createRatingHandler(index) {
+  return function(rating) {
+    this.ratings[index] = rating;
+  };
+}
+/////////////
+
+
+In this case, the inner function (function(rating)) closes over the index variable 
+from the outer function (createRatingHandler). 
+This allows the function to remember the index of the joke it is meant to rate, 
+even when the outer function has completed its execution.
+
+However, the actual implementation in the current code does not rely on closures. 
+The rateJoke method directly modifies the ratings array by using the provided index:
+
+/////////////
+rateJoke(index, rating) {
+  this.ratings[index] = rating;
+}
+/////////////
+
+=============================================================================================================
+
+2.
+Side effects occur when a function interacts with the outside world, 
+such as making network requests, manipulating the DOM, or modifying external state.
+In my code, the potential side effects include:
+API Call in mounted():
+Fetching jokes from the API is a side effect because it interacts 
+with an external service and updates the component state (this.jokes).
+Expected: Yes, it's necessary to retrieve data.
+Can it be avoided?: No, but it is handled properly with error catching.
